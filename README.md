@@ -1,5 +1,9 @@
 # TERRA
 
+[![arXiv](https://img.shields.io/badge/arXiv-2608.15211-b31b1b.svg)](https://arxiv.org/abs/2608.15211)
+
+**Paper:** [TERRA: A Hierarchical Parallel Training and Memory Orchestration Framework for High-Resolution AI-based Earth Modeling](https://arxiv.org/pdf/2608.15211)
+
 TERRA is a distributed training system for high-resolution Earth forecasting Transformers. The artifact contains the SAWSTP parallel runtime, row-major ragged window assignment, multi-level WP/SP/TP execution, and profiling-guided memory orchestration used by the accompanying TPDS paper.
 
 This directory is a publication-oriented source snapshot derived from the internal TERRA research tree. It intentionally excludes datasets, dataset-construction code, benchmark drivers, paper assets, checkpoints, machine addresses, and generated outputs.
