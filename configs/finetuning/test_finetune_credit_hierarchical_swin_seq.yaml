@@ -1,0 +1,47 @@
+finetune_lead_time: 2
+
+saved_data_path: './runs/finetune/seq_glorys_credit_hierarchical_swin'
+
+task_type: 'glorys'
+model_architecture: 'credit_hierarchical_swin'
+num_channels: 93
+
+trained_model_config_path:
+# trained_model_checkpoint_path: '/path/to/epoch200.pth'
+# trained_model_epoch: 200
+
+optimizer_config: 4
+
+precision: 'fp16'
+half_model: False
+
+norm_type: 'zs'
+model_type: 'sequential'
+
+micro_batch_size: 1
+
+padding_scale: 2 #8
+num_layers: 10
+embedding_dim: 512 #768
+num_heads: 4 #6
+patch_size: 8 #4
+window_size: 90 #6
+kaiming_init: True
+
+selective_recompute: # 2026.06.05
+  enabled: True
+  policy: 'full_checkpoint' # 'full_checkpoint' 'sampling_aware'
+  impl: 'torch'
+
+  transformer_layer_activation_mb: 10000
+  checkpoint_sampling_blocks: True
+
+  checkpoint_ratio: 0.5
+  avoid_shifted_blocks: True
+
+  estimated_baseline_policy: 'full_checkpoint'
+  estimated_baseline_memory_gb: 35
+
+  memory_budget_gb: 75
+
+learning_rate: 0.000025 #0.0001

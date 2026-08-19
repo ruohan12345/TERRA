@@ -1,0 +1,51 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the accompanying TERRA paper."
+title: "TERRA: A Hierarchical Parallel Training and Memory Orchestration Framework for High-Resolution AI-based Earth Modeling"
+type: software
+version: 0.1.0
+date-released: 2026-08-09
+authors:
+  - family-names: "Wu"
+    given-names: "Ruohan"
+  - family-names: "Zhu"
+    given-names: "Ziqi"
+  - family-names: "Zhao"
+    given-names: "Yang"
+  - family-names: "Tang"
+    given-names: "Jiarui"
+  - family-names: "Cui"
+    given-names: "Yingzhe"
+  - family-names: "Chen"
+    given-names: "Junshi"
+  - family-names: "Jing"
+    given-names: "Zhao"
+  - family-names: "Shi"
+    given-names: "Jun"
+  - family-names: "An"
+    given-names: "Hong"
+repository-code: "https://github.com/ruohan12345/TERRA"
+url: "https://arxiv.org/abs/2608.15211"
+preferred-citation:
+  type: article
+  title: "TERRA: A Hierarchical Parallel Training and Memory Orchestration Framework for High-Resolution AI-based Earth Modeling"
+  year: 2026
+  url: "https://arxiv.org/abs/2608.15211"
+  authors:
+    - family-names: "Wu"
+      given-names: "Ruohan"
+    - family-names: "Zhu"
+      given-names: "Ziqi"
+    - family-names: "Zhao"
+      given-names: "Yang"
+    - family-names: "Tang"
+      given-names: "Jiarui"
+    - family-names: "Cui"
+      given-names: "Yingzhe"
+    - family-names: "Chen"
+      given-names: "Junshi"
+    - family-names: "Jing"
+      given-names: "Zhao"
+    - family-names: "Shi"
+      given-names: "Jun"
+    - family-names: "An"
+      given-names: "Hong"

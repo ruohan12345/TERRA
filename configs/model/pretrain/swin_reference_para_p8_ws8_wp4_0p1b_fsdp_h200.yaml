@@ -1,0 +1,62 @@
+description: 'swin_reference_para_p8_ws8_wp4_0p1b_fsdp_h200'
+train_path: './runs/pretrain/swin_reference_para_p8'
+ckpt_start: False
+ckpt_epoch: 0
+start_epoch: 0
+num_pre_train_epochs: 300
+save_interval_epochs: 1
+
+task_type: 'glorys'
+model_architecture: 'swin_reference'
+num_channels: 93
+
+optimizer_config: 5
+fsdp_checkpoint_type: 'full'
+precision: 'fp16'
+half_model: False
+clip_grad: False
+
+norm_type: 'mm'
+data_precision: 'fp16'
+model_type: 'parallel'
+use_splited_data: True
+use_fake_input: False
+
+wp_topo: '(4, 1)'
+embedding_parallel_type: 'window_linear'
+xfmr_wp_topo: '(2, 2)'
+xfmr_sp_size: 1
+tensor_parallel_size: 1
+sp_tp_placement: 'tp_first'
+window_assignment_mode: 'ragged_round_robin'
+
+# Keep the global batch comparable with the p4 + sampling baseline first.
+micro_batch_size: 2 #2 #4 #2
+num_workers: 2
+
+padding_policy: explicit
+padded_shape: [2304, 4352]
+padding_scale: 2
+
+num_layers: 10
+embedding_dim: 1024
+num_heads: 8
+patch_size: 8
+window_size: 8
+kaiming_init: True
+
+use_attn_mask: True
+use_relative_position_bias: True
+USE_FLASH_ATTENTION: False
+
+loss_func: 'L1'
+learning_rate: 0.0002
+warmup_steps: 10
+data_resolution: -1
+
+activation:
+  mode: torch_recompute
+  policy: uniform
+  checkpoint_layers: [0]
+  checkpoint_patch_embed: False
+  checkpoint_patch_recovery: False

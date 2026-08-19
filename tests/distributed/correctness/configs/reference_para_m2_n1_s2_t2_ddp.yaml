@@ -1,0 +1,48 @@
+description: 'correctness_reference_para_m2_n1_s2_t2_ddp'
+train_path: './tests/distributed/correctness/train_runs/para_m2_n1_s2_t2'
+saved_data_path: './tests/distributed/correctness/saved_data/para_m2_n1_s2_t2'
+ckpt_start: False
+load_saved_data_dict: False
+ckpt_epoch: 0
+clip_grad: False
+
+task_type: 'glorys'
+model_architecture: 'credit_hierarchical_swin'
+num_channels: 93
+
+optimizer_config: 4
+
+precision: 'fp16'
+half_model: False
+
+norm_type: 'zs'
+model_type: 'parallel'
+wp_topo: '(8, 1)'
+embedding_parallel_type: 'window_linear'
+xfmr_wp_topo: '(2, 1)'
+xfmr_sp_size: 2
+tensor_parallel_size: 2
+sp_tp_placement: 'tp_first'
+window_assignment_mode: 'regular'
+
+micro_batch_size: 1
+
+padding_policy: scale
+padding_scale: 2
+num_layers: 2
+embedding_dim: 512
+num_heads: 8
+patch_size: 4
+window_size: 8
+kaiming_init: True
+use_attn_mask: True
+use_relative_position_bias: True
+USE_FLASH_ATTENTION: False
+
+loss_func: 'L1'
+
+start_epoch: 0
+num_pre_train_epochs: 300
+learning_rate: 0.0001
+
+data_resolution: -1

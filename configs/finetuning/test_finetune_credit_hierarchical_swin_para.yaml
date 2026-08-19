@@ -1,0 +1,65 @@
+finetune_lead_time: 3
+
+saved_data_path: './runs/finetune/para_glorys_credit_hierarchical_swin'
+
+task_type: 'glorys'
+model_architecture: 'credit_hierarchical_swin'
+num_channels: 93
+
+# Optional pretrained checkpoint loading. If trained_model_config_path is empty,
+# test_finetune.py will start from the initialized model.
+trained_model_config_path:
+# trained_model_checkpoint_path: '/path/to/epoch200.pth'
+# trained_model_epoch: 200
+
+optimizer_config: 4
+# 4: DDP, 6: custom distributed optimizer
+
+precision: 'fp16'
+half_model: False
+
+norm_type: 'zs'
+model_type: 'parallel'
+# sequential reference model
+
+# hybrid
+wp_topo: '(8, 1)' # (2, 1) (4, 1) (8, 1)  #
+embedding_parallel_type: 'window_linear'
+xfmr_wp_topo: '(2, 2)' # (2, 2)  (4, 1)
+
+xfmr_sp_size: 2 # 1: full-window WP; >1: intra-window Ulysses/SP
+
+window_assignment_mode: 'ragged_round_robin'
+# 'ragged_round_robin' 'regular'
+
+micro_batch_size: 1
+
+padding_scale: 2 #8
+num_layers: 10 #10
+embedding_dim: 1024 #512 #768
+num_heads: 8 #4 #6
+patch_size: 4 #4
+window_size: 180 #6
+kaiming_init: True
+num_workers: 8
+learning_rate: 0.000025 #0.0001
+
+selective_recompute: # 2026.06.05
+  enabled: True
+  policy: 'uniform' # 'full_checkpoint' 'sampling_aware' 'uniform'
+  impl: 'torch'
+
+  checkpoint_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+  transformer_layer_activation_mb: 256
+  checkpoint_sampling_blocks: True
+
+  checkpoint_ratio: 0.1
+  avoid_shifted_blocks: True
+
+  estimated_baseline_policy: 'full_checkpoint'
+  estimated_baseline_memory_gb: 11
+
+  memory_budget_gb: 72
+
+# policy

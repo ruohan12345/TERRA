@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terra"
+version = "0.1.0"
+description = "Topology- and memory-aware distributed training for Earth forecasting Transformers"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26,<2",
+  "PyYAML>=6.0",
+  "einops>=0.7",
+  "timm>=0.9",
+  "matplotlib>=3.8",
+  "Pillow>=10",
+  "tqdm>=4.66",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*", "credit*", "dataloader*", "models*", "optimizer*", "profiler*", "train_scripts*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

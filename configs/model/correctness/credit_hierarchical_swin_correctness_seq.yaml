@@ -1,0 +1,44 @@
+saved_data_path: './log/tmp/correctness/seq_saved_data'
+
+task_type: 'glorys'
+model_architecture: 'credit_hierarchical_swin'
+num_channels: 93
+
+optimizer_config: 4
+precision: 'fp16'
+half_model: False
+
+norm_type: 'mm'
+model_type: 'sequential'
+
+micro_batch_size: 1
+
+padding_policy: explicit
+padded_shape: [2304, 4352]
+padding_scale: 4
+
+num_layers: 10
+embedding_dim: 1024
+num_heads: 8
+patch_size: 4
+window_size: 32 #8
+kaiming_init: True
+num_workers: 2
+learning_rate: 0.0001
+
+use_attn_mask: False  #True
+use_relative_position_bias: False #True
+USE_FLASH_ATTENTION: False
+
+activation:
+  mode: torch_recompute
+  policy: full_checkpoint
+  checkpoint_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  sampling_checkpoint:
+    down: D1
+    up: U1
+  offload:
+    mode: async_d2h_h2d
+    pin_memory: True
+    non_blocking: True
+    min_numel: 1048576

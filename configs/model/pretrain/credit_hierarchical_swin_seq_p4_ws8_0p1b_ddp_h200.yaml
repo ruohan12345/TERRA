@@ -1,0 +1,58 @@
+description: 'credit_hierarchical_swin_seq_p4_ws8_0p1b_ddp_h200'
+train_path: './runs/pretrain/credit_hierarchical_swin_seq_p4'
+ckpt_start: False
+ckpt_epoch: 0
+start_epoch: 0
+num_pre_train_epochs: 300
+save_interval_epochs: 1
+
+task_type: 'glorys'
+model_architecture: 'credit_hierarchical_swin'
+num_channels: 93
+
+optimizer_config: 4
+precision: 'fp16'
+half_model: False
+clip_grad: False
+
+norm_type: 'mm'
+data_precision: 'fp16'
+model_type: 'sequential'
+use_splited_data: True
+use_fake_input: False
+
+micro_batch_size: 1
+num_workers: 8
+
+padding_policy: explicit
+padded_shape: [2304, 4352]
+padding_scale: 2
+
+num_layers: 10
+embedding_dim: 1024
+num_heads: 8
+patch_size: 4
+window_size: 8
+kaiming_init: True
+
+use_attn_mask: True
+use_relative_position_bias: True
+USE_FLASH_ATTENTION: False
+
+loss_func: 'L1'
+learning_rate: 0.0001
+warmup_steps: 10
+data_resolution: -1
+
+selective_recompute:
+  enabled: True
+  policy: 'uniform'
+  impl: 'torch'
+  checkpoint_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  transformer_layer_activation_mb: 256
+  checkpoint_sampling_blocks: True
+  checkpoint_ratio: 0.1
+  avoid_shifted_blocks: True
+  estimated_baseline_policy: 'full_checkpoint'
+  estimated_baseline_memory_gb: 11
+  memory_budget_gb: 120

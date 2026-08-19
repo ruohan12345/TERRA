@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+build/
+dist/
+
+# Generated runs and machine-local files
+results/
+logs/
+log/
+artifacts/
+checkpoints/
+train_runs/
+saved_data/
+generated_configs/
+configs/generated/
+*.log
+*.bak*
+
+# Large profiling outputs
+memory_timeline/
+*.pt
+*.pth
+*.ckpt
+*.npz
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
