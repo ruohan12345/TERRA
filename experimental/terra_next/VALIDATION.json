@@ -1,0 +1,34 @@
+{
+  "format": "terra_next_layout_increment_validation_v1",
+  "status": "PASS",
+  "scope": "Visual layout demo and generic routing snapshot, not full training workspace",
+  "layout_demo_unit_tests": 7,
+  "generic_shift_coordinate_oracle_cases": 1440,
+  "figure_visual_QA": "Both Chinese PNGs inspected without clipping",
+  "figure_vs_plan_vs_actual_P2P_send_matrices": "EXACT",
+  "actual_P2P": {
+    "world_size": 4,
+    "backend": "gloo",
+    "dtype": "float32",
+    "forward_exact": true,
+    "weighted_gradient_exact": true,
+    "mocked_transport": false,
+    "row_remote_tokens": 256,
+    "column_remote_tokens": 128
+  },
+  "runtime_files": 29,
+  "runtime_files_unchanged_vs_frozen_source": true,
+  "runtime_source_fingerprint": "1965ceed1f12650076ffeba2ab5ea4c3de56c62333c64103748e82d57deeac87",
+  "python_files_parsed": 34,
+  "known_private_path_marker_hits": 0,
+  "privacy_scan_scope": "Known project markers plus the existing public release scanner patterns, not a universal secret/provenance guarantee",
+  "production_model_included": false,
+  "end_to_end_train_harness_included": false,
+  "new_GPU_or_NPU_performance_claim": false,
+  "remote_written": false,
+  "source_evidence_hashes": {
+    "actual_p2p_receipt": "6cb1bca94c8d8bde6a6f92a8fd02b0b8e6d5e31a8b2821f77edf6b232917dcc0",
+    "demo_validation": "d7cfc0f063c4ec2c64246940da8e2ddc0273b5be6f262cd27274f38787cd6faf",
+    "figure_receipt": "b501cf52e25bdbbe351a04df2bdd2cb98fda27d3b2286a7bc7f8bb8d5fd16358"
+  }
+}

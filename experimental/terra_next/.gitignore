@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+outputs/
+p2p_demo_output/
+theorem_checks/
+layout_figures/
+*.pt
+*.pth
+*.ckpt
+*.trace.json
