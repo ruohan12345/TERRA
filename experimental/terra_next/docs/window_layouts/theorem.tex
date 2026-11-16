@@ -1,0 +1,196 @@
+% Standalone subsection fragment, formalized on 2026-11-17.
+% Preamble requirements:
+%   \usepackage{amsmath,amssymb,amsthm}
+%   \newtheorem{lemma}{Lemma}
+%   \newtheorem{theorem}{Theorem}
+%   \newtheorem{corollary}{Corollary}
+% Reuse the thesis's existing environments if they are already defined.
+% This fragment does not define environments or a document class.
+% The theorem counts logical token rows, not elapsed time or measured bandwidth.
+
+\subsection{Exact shift communication for balanced contiguous window ownership}
+\label{sec:balanced-window-shift}
+
+\paragraph{Ownership and counting domain.}
+Consider a complete periodic model domain of height $H=Rw$ and width $W=Cw$,
+partitioned into an $R\times C$ grid of square windows of side length $w$.
+The symbol $C$ denotes the number of window columns; the feature dimension
+is denoted by $F$. We consider pure window parallelism: each complete
+window and all $F$ features of its tokens have one owner among $P$ ranks.
+All model-domain tokens, including evolving model-padding tokens, are retained.
+
+Let $N=RC$, $q=\lfloor N/P\rfloor$, and let
+$0=b_0<b_1<\cdots<b_P=N$ be balanced scan cuts, with
+$b_{p+1}-b_p\in\{q,q+1\}$. Both scans use these same cuts and start at the
+fixed global window origin $(0,0)$; the cuts are not cyclically translated.
+Define $g(t)=p$ for $b_p\le t<b_{p+1}$. Row-major and column-major ownership are
+\begin{equation}
+ G_r(i,j)=g(iC+j),\qquad G_c(i,j)=g(jR+i).
+ \label{eq:balanced-owner}
+\end{equation}
+Global window coordinates are unchanged by the choice of scan. Define
+\begin{equation}
+ k_r=\sum_{p=1}^{P-1}\mathbf{1}\{b_p\not\equiv0\pmod C\},\qquad
+ k_c=\sum_{p=1}^{P-1}\mathbf{1}\{b_p\not\equiv0\pmod R\}.
+ \label{eq:ragged-cut-counts}
+\end{equation}
+Thus $0\le k_r,k_c\le P-1$.
+
+An equal-axis shift $(d,d)$, with integer $0<d<w$, assigns a source token
+$(y,x)$ to the window containing
+$((y-d)\bmod H,(x-d)\bmod W)$ in the target coordinate layout.
+For one batch sample, let $S$ count tokens whose target owner differs from
+their source owner. Each remote value is counted once at its sender;
+local copies and receiver-side recounting are excluded.
+
+\begin{lemma}[Neighbor decomposition]
+\label{lem:shift-neighbor-decomposition}
+For any owner grid $G$, let
+\begin{align}
+ A_h&=\sum_{i,j}\mathbf{1}\{G(i,j)\ne G(i,j-1)\},\\
+ A_v&=\sum_{i,j}\mathbf{1}\{G(i,j)\ne G(i-1,j)\},\\
+ A_d&=\sum_{i,j}\mathbf{1}\{G(i,j)\ne G(i-1,j-1)\},
+\end{align}
+where window coordinates are periodic. Then
+\begin{equation}
+ S=d(w-d)(A_h+A_v)+d^2A_d.
+ \label{eq:shift-neighbor-count}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Within each source window, $(w-d)^2$ tokens stay in the same window,
+$d(w-d)$ move to its left neighbor, $d(w-d)$ to its upper neighbor,
+and $d^2$ to its upper-left neighbor. These four token sets are disjoint.
+Multiplying their sizes by the corresponding owner-mismatch indicators
+and summing proves the claim.
+\end{proof}
+
+\begin{lemma}[Neighbor counts for balanced scans]
+\label{lem:balanced-neighbor-counts}
+Suppose $2\le P\le\min(R,C)$ and the balanced, origin-fixed cuts in
+\eqref{eq:balanced-owner} are used. For row-major ownership,
+\begin{equation}
+ (A_h,A_v,A_d)=(2k_r,PC,PC).
+ \label{eq:row-neighbor-counts}
+\end{equation}
+For column-major ownership,
+\begin{equation}
+ (A_h,A_v,A_d)=(PR,2k_c,PR).
+ \label{eq:column-neighbor-counts}
+\end{equation}
+\end{lemma}
+\begin{proof}
+We first prove the row-major statement. Each scan segment has length at
+least $q\ge C$, so a window row contains at most one interior cut.
+Each such cut causes two horizontal owner changes on that row's cycle:
+one at the cut and one at the last-to-first-column edge.
+A cut aligned with a complete row causes none. Hence $A_h=2k_r$.
+
+On the flattened periodic scan $\mathbb Z_N$, the upper-neighbor map is
+$t\mapsto t-C$. A half-open path $(t-C,t]$ crosses at most one cut because
+consecutive cuts are at least $C$ positions apart. Each of the $P$ cyclic
+rank boundaries causes exactly $C$ mismatches, giving $A_v=PC$.
+The boundary from the last rank back to the first is included.
+
+For the diagonal count, first consider $P=R$. Balanced segment lengths
+are then exactly $C$, and $b_0=0$ makes each segment one complete window
+row. Every upper and upper-left neighbor belongs to a different rank,
+so $A_d=RC=PC$.
+
+If $P<R$, the additional condition $C\ge P$ gives $q\ge C+1$.
+Consider the auxiliary flattened map $t\mapsto t-(C+1)$.
+Since all segment lengths are at least $C+1$, every such half-open path
+crosses at most one cut. A cut $b$ yields mismatches at the $C+1$ origins
+$t=b,b+1,\ldots,b+C$, for $P(C+1)$ mismatches in total.
+The actual upper-left map agrees with this map except at first-column
+origins $t\equiv0\pmod C$, where it is $t\mapsto t-1$.
+If $b\equiv0\pmod C$, the auxiliary map mismatches at first-column origins
+$b$ and $b+C$, whereas the actual map mismatches only at $b$.
+If $b\not\equiv0\pmod C$, the auxiliary map has one first-column mismatch,
+at $C\lceil b/C\rceil$, and the actual map has none there.
+Thus each cut reduces the count by exactly one. The cut spacing prevents
+double counting, and $A_d=P(C+1)-P=PC$ follows.
+
+For column-major ownership, apply the row-major argument to the transposed
+$C\times R$ owner grid. Horizontal and vertical counts interchange, while
+the upper-left count is preserved, proving \eqref{eq:column-neighbor-counts}.
+This transposition is a proof device, not a requirement to transpose feature data.
+\end{proof}
+
+\begin{theorem}[Exact equal-axis shift counts]
+\label{thm:balanced-equal-axis-shift}
+Under the assumptions of Lemma~\ref{lem:balanced-neighbor-counts}, an equal-axis
+shift $(d,d)$ with $0<d<w$ has exact communication counts
+\begin{equation}
+ \boxed{S_r=PCwd+2d(w-d)k_r,\qquad
+ S_c=PRwd+2d(w-d)k_c.}
+ \label{eq:balanced-general-shift}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Substitute \eqref{eq:row-neighbor-counts} and
+\eqref{eq:column-neighbor-counts} into
+\eqref{eq:shift-neighbor-count}.
+\end{proof}
+
+\begin{corollary}[Orientation under an even half-window shift]
+\label{cor:balanced-half-window-orientation}
+In addition, let $w$ be even and $d=w/2$. Then
+\begin{equation}
+ S_r=\frac{w^2}{2}(PC+k_r),\qquad
+ S_c=\frac{w^2}{2}(PR+k_c).
+ \label{eq:balanced-half-shift}
+\end{equation}
+If $C>R$, then $S_c<S_r$; if $R>C$, then $S_r<S_c$; if $R=C$, then $S_r=S_c$.
+\end{corollary}
+\begin{proof}
+Equation~\eqref{eq:balanced-half-shift} follows by substitution into
+\eqref{eq:balanced-general-shift}. For $C>R$,
+\begin{equation}
+ S_r-S_c
+ =\frac{w^2}{2}\bigl[P(C-R)+k_r-k_c\bigr]
+ \ge\frac{w^2}{2}\bigl[P-(P-1)\bigr]
+ =\frac{w^2}{2}>0.
+\end{equation}
+The tall-domain result follows by exchanging $R$ and $C$.
+For $R=C$, the common cuts imply $k_r=k_c$.
+\end{proof}
+
+\paragraph{Cut conventions and examples.}
+Both the floor cuts $b_p=\lfloor pN/P\rfloor$ and the prefix-remainder cuts
+$b_p=pq+\min(p,N\bmod P)$ satisfy the balanced-length assumption,
+but they need not give the same $k$ values.
+For $R=43,C=90,w=6,P=4$, prefix cuts $(968,1936,2903)$ give
+$(k_r,k_c)=(3,3)$ and $(S_r,S_c)=(6534,3150)$.
+Floor cuts $(967,1935,2902)$ give $(3,2)$ and $(6534,3132)$.
+For $R=8,C=17,w=32,P=4$, both rules give cuts $(34,68,102)$,
+$(k_r,k_c)=(0,3)$, and $(S_r,S_c)=(34816,17920)$.
+These are integer counts on the specified geometry, not elapsed-time measurements.
+
+\paragraph{Payload scaling and scope.}
+With batch size $B$, feature dimension $F$, and actual transmitted scalar
+width $\beta$, logical payload is $BFS\beta$ bytes per direction.
+The actual wire width must be observed; it is not implied by BF16 AMP.
+An inverse permutation has the same remote-token count, but forward and
+backward byte volumes must use their respective wire widths.
+The result excludes stage-entry and stage-exit redistribution,
+convolution halos, parameter-gradient reductions, protocol overhead,
+local packing and restoration, and communication--computation overlap.
+It is a total-token-count result, not a latency theorem or an optimality
+claim over all two-dimensional ownership strategies.
+
+\paragraph{Necessary restrictions.}
+The even-window hypothesis is substantive: for
+$R=5,C=6,P=5,w=3,d=1$, balanced cuts yield $S_r=90$ and $S_c=91$.
+For $P=1$ actual remote traffic is zero and these closed forms do not apply.
+If $P>\min(R,C)$, strict orientation ordering need not hold; for example,
+$R=2,C=3,P=6,w=2,d=1$ gives $S_r=S_c=18$.
+Merely requiring each segment to have length at least $\max(R,C)$ cannot
+replace balance: $R=C=4,P=3$ with lengths $(5,4,7)$ gives
+$(A_h,A_v,A_d)=(4,12,11)$ for row-major ownership.
+A cyclically translated scan origin is also excluded: with $R=C=P=2$
+and segment length two, translating the row scan by one position can
+give $A_d=0$ instead of $PC=4$.
+Unequal-axis or one-axis shifts require their own neighbor weights.
+Model-padding values are retained during internal shifts and are not
+removed to reduce the counting domain.

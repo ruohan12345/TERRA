@@ -1,0 +1,158 @@
+{
+  "format": "terra_next_routing_snapshot_v1",
+  "scope": "Generic routing and supporting profiling modules only; not the full training workspace or production model",
+  "source_build_hash": "1965ceed1f12650076ffeba2ab5ea4c3de56c62333c64103748e82d57deeac87",
+  "namespace": "terra",
+  "import_root": "src",
+  "files": [
+    {
+      "path": "src/terra/__init__.py",
+      "bytes": 102,
+      "sha256": "e9e8cf04486d12a8ceca67156a87cea5a82260c5d48a7db9a63b5b219cb37785"
+    },
+    {
+      "path": "src/terra/core/__init__.py",
+      "bytes": 72,
+      "sha256": "e0eff66a501c7a3d5c5bddd233084481d13e442aa4aaccee72b5d24112194a7b"
+    },
+    {
+      "path": "src/terra/core/FMP/__init__.py",
+      "bytes": 69,
+      "sha256": "88f18813d949259f584bbaa37792f33b4fd6f7664ec3c59de948b8bf5d766c6e"
+    },
+    {
+      "path": "src/terra/core/FMP/communication.py",
+      "bytes": 17301,
+      "sha256": "04da367427b11bdc33b5f89438991fd98b4fce2a6f8a9610cac9d8e87ce65a48"
+    },
+    {
+      "path": "src/terra/core/FMP/layout.py",
+      "bytes": 23170,
+      "sha256": "a9f1643118c2441cd60685e4363fcd3224b9a1e01fa35ebbec4a62742064e2e9"
+    },
+    {
+      "path": "src/terra/core/FMP/window_shift.py",
+      "bytes": 12512,
+      "sha256": "ab798419835734978793f022d1084d960c32d0e9d6e06bd354109de37d7b3069"
+    },
+    {
+      "path": "src/terra/core/dmp/__init__.py",
+      "bytes": 280,
+      "sha256": "c2ba42c8cd701724dd825b93719f42784ba3fb8e68e697cca282fca45ccaf06f"
+    },
+    {
+      "path": "src/terra/core/dmp/communication.py",
+      "bytes": 9059,
+      "sha256": "37c3eba21cb24eb3cb4cf99884946e92acec9724c44e5d9be5b9f39326958d1e"
+    },
+    {
+      "path": "src/terra/core/dmp/layout.py",
+      "bytes": 4542,
+      "sha256": "3fc54ed632664011c46b4cfb80c803f67afa52e7f2f5e3ab66f94694f74cf77c"
+    },
+    {
+      "path": "src/terra/core/dmp/mesh.py",
+      "bytes": 9461,
+      "sha256": "7333677a1b0a06df01af48685e2eda0618f64ea8b15983b3d11d9ae8f77f8ebd"
+    },
+    {
+      "path": "src/terra/core/parallel_manager/__init__.py",
+      "bytes": 146,
+      "sha256": "b9191be309892bf71276cdcfbc93b140b9da74a2f2016ae523c5932455ca40b1"
+    },
+    {
+      "path": "src/terra/core/parallel_manager/rank_manager.py",
+      "bytes": 7761,
+      "sha256": "9dabff673710980cfaf23c032579c31b5f99acec0c86753800aec63d47d43b57"
+    },
+    {
+      "path": "src/terra/core/spatial.py",
+      "bytes": 1854,
+      "sha256": "89aff950ffdbf665c30dd9dcf76c730be737c00afc794d6ace2e4bef77969b44"
+    },
+    {
+      "path": "src/terra/profiling/__init__.py",
+      "bytes": 142,
+      "sha256": "b8bb84df20be1633cc9380a32abe5c00ecc89747a0cead6d052e6a1eff03aaf8"
+    },
+    {
+      "path": "src/terra/profiling/environment.py",
+      "bytes": 33236,
+      "sha256": "10ed599e85adad2fe917c3184c8b92d3970a11856be0de467de77436d4573f33"
+    },
+    {
+      "path": "src/terra/profiling/environment_report.py",
+      "bytes": 13472,
+      "sha256": "78ec5d9f92b5e4484dc69d92b29fd5d78b4443750693d00d466d75e9d98d3030"
+    },
+    {
+      "path": "src/terra/profiling/figures.py",
+      "bytes": 31207,
+      "sha256": "e1b43142565b609e631c1d5a6c02605e3bd16e56d0f44f82ce7f3f41246d9176"
+    },
+    {
+      "path": "src/terra/profiling/hotspot_figures.py",
+      "bytes": 11311,
+      "sha256": "3db77bafa1e716f799b1b95de7287ad1273a7156dcef9935470c4d0e4f122420"
+    },
+    {
+      "path": "src/terra/profiling/hotspots.py",
+      "bytes": 17097,
+      "sha256": "d7c2e2d36417c21b78a025b6e88cc962e58beb201391adf8ac741ec6b4584745"
+    },
+    {
+      "path": "src/terra/profiling/intervals.py",
+      "bytes": 1129,
+      "sha256": "e8381d749469a3ddf7029730f87430d2232105346df8555b821860aeead4c367"
+    },
+    {
+      "path": "src/terra/profiling/native_npu.py",
+      "bytes": 21441,
+      "sha256": "950a815cbb976a2cdff5c5f34148ce6746bc4ba868e02431b3669c6cf75b9453"
+    },
+    {
+      "path": "src/terra/profiling/report.py",
+      "bytes": 34180,
+      "sha256": "f5bbdcd5978f258a20de882dfb8f3b6f0482bcf8433f79d53d130a69e4bcf4a6"
+    },
+    {
+      "path": "src/terra/profiling/timeline_html.py",
+      "bytes": 31718,
+      "sha256": "fa037c539185497063181d3ccf4ff388e9276b6dce5dcac23a9cb805dc0c3ddc"
+    },
+    {
+      "path": "src/terra/profiling/trace.py",
+      "bytes": 15867,
+      "sha256": "f2e1ad9a64aaccdeabff365c65ab818e93fc39ebbe97b08ab3e2a2157cb7439a"
+    },
+    {
+      "path": "src/terra/runtime/__init__.py",
+      "bytes": 60,
+      "sha256": "a8b405c78937dcee95e2f27efdedc75b5162f4e34493f5f2db6d402fc1ebe170"
+    },
+    {
+      "path": "src/terra/runtime/accelerator.py",
+      "bytes": 6338,
+      "sha256": "8b261401477b96fdad96a042e3b7c02851061198eef261df5bad3c6f37dcb90c"
+    },
+    {
+      "path": "src/terra/runtime/collectives.py",
+      "bytes": 4376,
+      "sha256": "ce33d7a1e1b8a829fd4a9e4ba5d706d235cdd64456b7e130f4572c488b05f9bd"
+    },
+    {
+      "path": "src/terra/runtime/profiling.py",
+      "bytes": 19983,
+      "sha256": "dc7f5c6d6f6b1f6fef35e1fb3fd6bc1316c2312cb55ad144b738396937335178"
+    },
+    {
+      "path": "src/terra/runtime/tensor_layout.py",
+      "bytes": 1046,
+      "sha256": "08e69972842a5c67b8c99d7c528be363dc10fedf37f258f77d359c5dfe8ff469"
+    }
+  ],
+  "source_files_copied_without_changes": true,
+  "production_model_included": false,
+  "end_to_end_training_harness_included": false,
+  "license": "Inherits the repository root Apache-2.0 LICENSE and existing third-party notices"
+}
